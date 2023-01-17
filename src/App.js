@@ -71,10 +71,20 @@ function App() {
   }
  
 
+ const [windowDimension, setDimension]= React.useState({width: window.innerWidth, height: window.innerHeight})
+ const detectSize=()=>{
+  setDimension({width: window.innerWidth, height: window.innerHeight})
 
+ }
+ React.useEffect(()=>{
+  window.addEventListener('resize',detectSize)
+  return()=>{
+    window.removeEventListener('resize',detectSize)
+  }
+ },[windowDimension])
   return (
     <div className="App">
-      {win && <Confetti/>}
+      {win && <Confetti width={windowDimension.width} height={windowDimension.height}/>}
       <div className='header'>
       <h1>Tenzies</h1>
       <h3>Roll untill all dice are the same. <br></br> Click each die to freeze <br></br> at it at its current value between rolls.</h3>
